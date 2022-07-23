@@ -44,20 +44,20 @@ class UserCategory {
             if (count($result)>0):
                 return $this->generalFunctions->returnValue($result, true);
             else:
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Problem in UserCategories: query is empty",false);
             endif;
         }
         catch (MongoDB\Exception\UnsupportedException $e){
             error_log("Problem in find user categories \n".$e);
-            return $this->generalFunctions->returnValue("",false);
+            return $this->generalFunctions->returnValue("Unsupported mongoDB exception: ".$e,false);
         }
         catch (MongoDB\Driver\Exception\InvalidArgumentException $e){
             error_log("Problem in find user categories \n".$e);
-            return $this->generalFunctions->returnValue("",false);
+            return $this->generalFunctions->returnValue("Invalid Argument mongoDB exception".$e,false);
         }
         catch (MongoDB\Driver\Exception\RuntimeException $e){
             error_log("Problem in find user categories \n".$e);
-            return $this->generalFunctions->returnValue("",false);
+            return $this->generalFunctions->returnValue("Runtime mongoDB exception: ".$e,false);
         };
         
     }
@@ -72,23 +72,23 @@ class UserCategory {
                 if ($result):
                     return $this->generalFunctions->returnValue($result,true);
                 else:
-                    return $this->generalFunctions->returnValue("",false);
+                    return $this->generalFunctions->returnValue("Problem in UserCategories: query is empty",false);
                 endif;
             }
             catch (MongoDB\Exception\UnsupportedException $e){
                 error_log("Problem in findOne user category \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Unsupported mongoDB exception: ".$e,false);
             }
             catch (MongoDB\Driver\Exception\InvalidArgumentException $e){
                 error_log("Problem in findOne user category \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Invalid Argument mongoDB exception".$e,false);
             }
             catch (MongoDB\Driver\Exception\RuntimeException $e){
                 error_log("Problem in findOne user category \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Runtime mongoDB exception: ".$e,false);
             };
         } else 
-            return $this->generalFunctions->returnValue("",false); 
+            return $this->generalFunctions->returnValue("Problem in Usercategories: no id received",false); 
     }
 
   
@@ -103,24 +103,24 @@ class UserCategory {
                     'name' => $name
                 ] );
                 if ($result->getInsertedCount()==1)
-                    return $this->generalFunctions->returnValue("",true);
+                    return $this->generalFunctions->returnValue("Usercategory created",true);
                 else 
-                    return $this->generalFunctions->returnValue("",false);
+                    return $this->generalFunctions->returnValue("Problem in creating usercategory",false);
             }
             catch (MongoDB\Driver\Exception\InvalidArgumentException $e){
                 error_log("Problem in insert user category \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Invalid Argument mongoDB exception".$e,false);
             }
             catch (MongoDB\Driver\Exception\BulkWriteException $e){
                 error_log("Problem in insert user category \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Bulk Write mongoDB exception: ".$e,false);
             }
             catch (MongoDB\Driver\Exception\RuntimeException $e){
                 error_log("Problem in insert user category \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Runtime mongoDB exception: ".$e,false);
             };
         } else 
-            return $this->generalFunctions->returnValue("",false);
+            return $this->generalFunctions->returnValue("Problem in Usercategories: wrong info received",false);
     }
 
    
@@ -131,28 +131,28 @@ class UserCategory {
                     '_id'=>new MongoDB\BSON\ObjectId($id)
                 ]);
                 if ($result->getDeletedCount()==1)
-                    return $this->generalFunctions->returnValue("",true);
+                    return $this->generalFunctions->returnValue("User category deleted",true);
                 else 
-                    return $this->generalFunctions->returnValue("",false);
+                    return $this->generalFunctions->returnValue("Problem in deleting usercategory",false);
             }
             catch (MongoDB\Exception\UnsupportedException $e){
                 error_log("Problem in delete user category \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Unsupported mongoDB exception: ".$e,false);
             }
             catch (MongoDB\Driver\Exception\InvalidArgumentException $e){
                 error_log("Problem in delete user category \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Invalid Argument mongoDB exception".$e,false);
             }
             catch (MongoDB\Driver\Exception\BulkWriteException $e){
                 error_log("Problem in delete user category \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Bulk Write mongoDB exception: ".$e,false);
             }
             catch (MongoDB\Driver\Exception\RuntimeException $e){
                 error_log("Problem in delete user category \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Runtime mongoDB exception: ".$e,false);
             };
         } else 
-            return $this->generalFunctions->returnValue("",false);
+            return $this->generalFunctions->returnValue("Problem in Usercategories: no id received",false);
     }
 
     
@@ -172,24 +172,24 @@ class UserCategory {
                     ]
                 );
                 if ($result->getModifiedCount()==1)
-                    return $this->generalFunctions->returnValue("",true);
+                    return $this->generalFunctions->returnValue("Usercategory updated",true);
                 else 
-                    return $this->generalFunctions->returnValue("",false);
+                    return $this->generalFunctions->returnValue("Problem in updating usercategory",false);
             }
             catch (MongoDB\Driver\Exception\InvalidArgumentException $e){
                 error_log("Problem in update user category \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Invalid Argument mongoDB exception".$e,false);
             }
             catch (MongoDB\Driver\Exception\BulkWriteException $e){
                 error_log("Problem in update user category \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Bulk Write mongoDB exception: ".$e,false);
             }
             catch (MongoDB\Driver\Exception\RuntimeException $e){
                 error_log("Problem in update user category \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Runtime mongoDB exception: ".$e,false);
             };
         } else 
-            return $this->generalFunctions->returnValue("",false);
+            return $this->generalFunctions->returnValue("Problem in Usercategories: wrong info received",false);
     }
 
     private function returnValue($result, $value){

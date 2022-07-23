@@ -44,21 +44,21 @@ class Announcement {
             if (count($result)>0):
                 return $this->generalFunctions->returnValue($result,true);
             else:
-                return $this->generalFunctions->returnValue(false);
+                return $this->generalFunctions->returnValue("Problem in Announcement: query is empty",false);
             endif;
         }
-        catch (MongoDB\Exception\UnsupportedException $e){
-            error_log("Problem in find announcements \n".$e);
-            return $this->generalFunctions->returnValue(false);
-        }
         catch (MongoDB\Driver\Exception\InvalidArgumentException $e){
-            error_log("Problem in find announcements \n".$e);
-            return $this->generalFunctions->returnValue(false);
+            error_log("Problem in insert user announcement \n".$e);
+            return $this->generalFunctions->returnValue("Invalid Argument mongoDB exception".$e,false);
+        }
+        catch (MongoDB\Driver\Exception\BulkWriteException $e){
+            error_log("Problem in insert user announcement \n".$e);
+            return $this->generalFunctions->returnValue("Bulk Write mongoDB exception: ".$e,false);
         }
         catch (MongoDB\Driver\Exception\RuntimeException $e){
-            error_log("Problem in find users \n".$e);
-            return $this->generalFunctions->returnValue(false);
-        };
+            error_log("Problem in insert user announcement \n".$e);
+            return $this->generalFunctions->returnValue("Runtime mongoDB exception: ".$e,false);
+        }
     }
 
     /**
@@ -96,23 +96,23 @@ class Announcement {
                 if ($result):
                     return $this->generalFunctions->returnValue($result,true);
                 else:
-                    return $this->generalFunctions->returnValue(false);
+                    return $this->generalFunctions->returnValue("Problem in Announcement: query is empty",false);
                 endif;
             }
-            catch (MongoDB\Exception\UnsupportedException $e){
-                error_log("Problem in findOne announcement \n".$e);
-                return $this->generalFunctions->returnValue(false);
-            }
             catch (MongoDB\Driver\Exception\InvalidArgumentException $e){
-                error_log("Problem in findOne announcement \n".$e);
-                return $this->generalFunctions->returnValue(false);
+                error_log("Problem in insert user announcement \n".$e);
+                return $this->generalFunctions->returnValue("Invalid Argument mongoDB exception".$e,false);
+            }
+            catch (MongoDB\Driver\Exception\BulkWriteException $e){
+                error_log("Problem in insert user announcement \n".$e);
+                return $this->generalFunctions->returnValue("Bulk Write mongoDB exception: ".$e,false);
             }
             catch (MongoDB\Driver\Exception\RuntimeException $e){
-                error_log("Problem in findOne announcement \n".$e);
-                return $this->generalFunctions->returnValue(false);
+                error_log("Problem in insert user announcement \n".$e);
+                return $this->generalFunctions->returnValue("Runtime mongoDB exception: ".$e,false);
             }
         } else 
-            return $this->generalFunctions->returnValue(false);
+            return $this->generalFunctions->returnValue("Problem in Announcement: no id received",false);
     }
 
     /**
@@ -205,24 +205,24 @@ class Announcement {
                 ]);
                 
                 if ($result->getInsertedCount()==1)
-                    return $this->generalFunctions->returnValue("",true);
+                    return $this->generalFunctions->returnValue("Announcement created",true);
                 else 
-                    return $this->generalFunctions->returnValue("",false);
+                    return $this->generalFunctions->returnValue("Problem in inserting announcement",false);
             }
             catch (MongoDB\Driver\Exception\InvalidArgumentException $e){
                 error_log("Problem in insert user announcement \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Invalid Argument mongoDB exception".$e,false);
             }
             catch (MongoDB\Driver\Exception\BulkWriteException $e){
                 error_log("Problem in insert user announcement \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Bulk Write mongoDB exception: ".$e,false);
             }
             catch (MongoDB\Driver\Exception\RuntimeException $e){
                 error_log("Problem in insert user announcement \n".$e);
-                return $this->generalFunctions->returnValue("",false);
-            };
+                return $this->generalFunctions->returnValue("Runtime mongoDB exception: ".$e,false);
+            }
         } else 
-            return $this->generalFunctions->returnValue("",false);
+            return $this->generalFunctions->returnValue("Problem in Announcement: wrong info received",false);
     }
 
     /**
@@ -262,28 +262,28 @@ class Announcement {
                     '_id'=>new MongoDB\BSON\ObjectId($id)
                 ]);
                 if ($result->getDeletedCount()==1)
-                    return $this->generalFunctions->returnValue(true);
+                    return $this->generalFunctions->returnValue("Announcement deleted",true);
                 else 
-                    return $this->generalFunctions->returnValue(false);
+                    return $this->generalFunctions->returnValue("Problem in deleting announcement".$e,false);
             }
             catch (MongoDB\Exception\UnsupportedException $e){
                 error_log("Problem in delete announcement \n".$e);
-                return $this->generalFunctions->returnValue(false);
+                return $this->generalFunctions->returnValue("Unsupported mongoDB exception: ".$e,false);
             }
             catch (MongoDB\Driver\Exception\InvalidArgumentException $e){
-                error_log("Problem in delete announcement \n".$e);
-                return $this->generalFunctions->returnValue(false);
+                error_log("Problem in insert user announcement \n".$e);
+                return $this->generalFunctions->returnValue("Invalid Argument mongoDB exception: ".$e,false);
             }
             catch (MongoDB\Driver\Exception\BulkWriteException $e){
-                error_log("Problem in delete announcement \n".$e);
-                return $this->generalFunctions->returnValue(false);
+                error_log("Problem in insert user announcement \n".$e);
+                return $this->generalFunctions->returnValue("Bulk Write mongoDB exception: ".$e,false);
             }
             catch (MongoDB\Driver\Exception\RuntimeException $e){
-                error_log("Problem in delete announcement \n".$e);
-                return $this->generalFunctions->returnValue(false);
+                error_log("Problem in insert user announcement \n".$e);
+                return $this->generalFunctions->returnValue("Runtime mongoDB exception: ".$e,false);
             };
         } else 
-            return $this->generalFunctions->returnValue(false);
+            return $this->generalFunctions->returnValue("Problem in Announcement: no id received",false);
     }
 
     /**
@@ -384,24 +384,24 @@ class Announcement {
                     ]
                 );
                 if ($result->getModifiedCount()==1)
-                    return $this->generalFunctions->returnValue(true);
+                    return $this->generalFunctions->returnValue("Announcement updated",true);
                 else 
-                    return $this->generalFunctions->returnValue(false);
+                    return $this->generalFunctions->returnValue("Problem in updating announcement",false);
             }
             catch (MongoDB\Driver\Exception\InvalidArgumentException $e){
-                error_log("Problem in update announcement \n".$e);
-                return $this->generalFunctions->returnValue(false);
+                error_log("Problem in insert user announcement \n".$e);
+                return $this->generalFunctions->returnValue("Invalid Argument mongoDB exception".$e,false);
             }
             catch (MongoDB\Driver\Exception\BulkWriteException $e){
-                error_log("Problem in update announcement \n".$e);
-                return $this->generalFunctions->returnValue(false);
+                error_log("Problem in insert user announcement \n".$e);
+                return $this->generalFunctions->returnValue("Bulk Write mongoDB exception: ".$e,false);
             }
             catch (MongoDB\Driver\Exception\RuntimeException $e){
-                error_log("Problem in update announcement \n".$e);
-                return $this->generalFunctions->returnValue(false);
-            };
+                error_log("Problem in insert user announcement \n".$e);
+                return $this->generalFunctions->returnValue("Runtime mongoDB exception: ".$e,false);
+            }
         } else 
-            return $this->generalFunctions->returnValue(false);
+            return $this->generalFunctions->returnValue("Problem in Announcement: wrong info received",false);
     }
 }
 ?>

@@ -49,23 +49,23 @@ class Subdepartment {
                 if (count($result)>0):
                     return $this->generalFunctions->returnValue($result, true);
                 else:
-                    return $this->generalFunctions->returnValue("",false);
+                    return $this->generalFunctions->returnValue("Problem in Subdepartment: query is empty",false);
                 endif;
             }
             catch (MongoDB\Exception\UnsupportedException $e){
                 error_log("Problem in findOne subdepartment \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Unsupported mongoDB exception: ".$e,false);
             }
             catch (MongoDB\Driver\Exception\InvalidArgumentException $e){
                 error_log("Problem in findOne subdepartment \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Invalid Argument mongoDB exception".$e,false);
             }
             catch (MongoDB\Driver\Exception\RuntimeException $e){
                 error_log("Problem in findOne subdepartment \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Runtime mongoDB exception: ".$e,false);
             };
         } else 
-            return $this->generalFunctions->returnValue("",false); 
+            return $this->generalFunctions->returnValue("Problem in Subdepartment: wrong info received",false); 
     }
 
     public function createSubdepartment($data) {
@@ -85,24 +85,24 @@ class Subdepartment {
                     ]
                 );
                 if ($result->getModifiedCount()==1)
-                    return $this->generalFunctions->returnValue("",true);
+                    return $this->generalFunctions->returnValue("Subdepartment created",true);
                 else 
-                    return $this->generalFunctions->returnValue("",false);
+                    return $this->generalFunctions->returnValue("Problem creating subdepartment",false);
             }
             catch (MongoDB\Driver\Exception\InvalidArgumentException $e){
                 error_log("Problem in insert subdepartment \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Invalid Argument mongoDB exception".$e,false);
             }
             catch (MongoDB\Driver\Exception\BulkWriteException $e){
                 error_log("Problem in insert subdepartment \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Bulk Write mongoDB exception: ".$e,false);
             }
             catch (MongoDB\Driver\Exception\RuntimeException $e){
                 error_log("Problem in insert subdepartment \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Runtime mongoDB exception: ".$e,false);
             };
         } else 
-            return $this->generalFunctions->returnValue(false);
+            return $this->generalFunctions->returnValue("Problem in Subdepartment: wrong info received",false);
 
     }
 
@@ -120,28 +120,28 @@ class Subdepartment {
                     ]
                 );
                 if ($result->getModifiedCount()==1)
-                    return $this->generalFunctions->returnValue("",true);
+                    return $this->generalFunctions->returnValue("Subdepartment deleted",true);
                 else 
-                    return $this->generalFunctions->returnValue("",false);
+                    return $this->generalFunctions->returnValue("Problem in deleting ubdepartment",false);
             }
             catch (MongoDB\Exception\UnsupportedException $e){
                 error_log("Problem in delete subdepartment \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Unsupported mongoDB exception: ".$e,false);
             }
             catch (MongoDB\Driver\Exception\InvalidArgumentException $e){
                 error_log("Problem in delete subdepartment \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Invalid Argument mongoDB exception".$e,false);
             }
             catch (MongoDB\Driver\Exception\BulkWriteException $e){
                 error_log("Problem in delete subdepartment \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Bulk Write mongoDB exception: ".$e,false);
             }
             catch (MongoDB\Driver\Exception\RuntimeException $e){
                 error_log("Problem in delete subdepartment \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Runtime mongoDB exception: ".$e,false);
             };
         } else 
-            return $this->generalFunctions->returnValue("",false);
+            return $this->generalFunctions->returnValue("Problem in Subdepartment: wrong info received",false);
     }
 
     public function updateSubdepartment($data) {
@@ -159,24 +159,24 @@ class Subdepartment {
                     [ '$set' => [ 'subdepartment.$.name' => $name ]]
                 );
                 if ($result->getModifiedCount()==1)
-                    return $this->generalFunctions->returnValue("",true);
+                    return $this->generalFunctions->returnValue("Subdepartment updated",true);
                 else 
-                    return $this->generalFunctions->returnValue("",false);
+                    return $this->generalFunctions->returnValue("Problem in updating subdepartment",false);
             }
             catch (MongoDB\Driver\Exception\InvalidArgumentException $e){
                 error_log("Problem in update subdepartment \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Invalid Argument mongoDB exception".$e,false);
             }
             catch (MongoDB\Driver\Exception\BulkWriteException $e){
                 error_log("Problem in update subdepartment \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Bulk Write mongoDB exception: ".$e,false);
             }
             catch (MongoDB\Driver\Exception\RuntimeException $e){
                 error_log("Problem in update subdepartment \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Runtime mongoDB exception: ".$e,false);
             };
         } else 
-            return $this->generalFunctions->returnValue("",false);
+            return $this->generalFunctions->returnValue("Problem in Subdepartment: wrong info received",false);
     }
 
     private function returnValue($result, $value){

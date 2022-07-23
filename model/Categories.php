@@ -51,23 +51,23 @@ class Categories {
                 if (count($result)>0):
                     return $this->generalFunctions->returnValue($result,true);
                 else:
-                    return $this->generalFunctions->returnValue("",false);
+                    return $this->generalFunctions->returnValue("Problem in Categories: query is empty",false);
                 endif;
             }
             catch (MongoDB\Exception\UnsupportedException $e){
                 error_log("Problem in findOne categories \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Unsupported mongoDB exception: ".$e,false);
             }
             catch (MongoDB\Driver\Exception\InvalidArgumentException $e){
                 error_log("Problem in findOne categories \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Invalid Argument mongoDB exception".$e,false);
             }
             catch (MongoDB\Driver\Exception\RuntimeException $e){
                 error_log("Problem in findOne categories \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Runtime mongoDB exception: ".$e,false);
             }
         } else 
-            return $this->generalFunctions->returnValue("",false); 
+            return $this->generalFunctions->returnValue("Problem in Categories: no id received",false); 
     }
 
    
@@ -90,24 +90,24 @@ class Categories {
                     ]
                 );
                 if ($result->getModifiedCount()==1)
-                        return $this->generalFunctions->returnValue("",true);
+                        return $this->generalFunctions->returnValue("Category created",true);
                     else 
-                        return $this->generalFunctions->returnValue("",false);
+                        return $this->generalFunctions->returnValue("Problem in creating categories",false);
             }
             catch (MongoDB\Driver\Exception\InvalidArgumentException $e){
                 error_log("Problem in insert categories \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Invalid Argument mongoDB exception".$e,false);
             }
             catch (MongoDB\Driver\Exception\BulkWriteException $e){
                 error_log("Problem in insert categories \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Bulk Write mongoDB exception: ".$e,false);
             }
             catch (MongoDB\Driver\Exception\RuntimeException $e){
                 error_log("Problem in insert categories \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Runtime mongoDB exception: ".$e,false);
             };
         } else 
-            return $this->generalFunctions->returnValue(false);
+            return $this->generalFunctions->returnValue("Problem in Categories: wrong info received",false);
     }
 
    
@@ -125,28 +125,28 @@ class Categories {
                     ]
                 );
                 if ($result->getModifiedCount()==1)
-                    return $this->generalFunctions->returnValue("",true);
+                    return $this->generalFunctions->returnValue("Category deleted",true);
                 else 
-                    return $this->generalFunctions->returnValue("",false);
+                    return $this->generalFunctions->returnValue("Problem in deleting categories",false);
             }
             catch (MongoDB\Exception\UnsupportedException $e){
                 error_log("Problem in delete categories \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Unsupported mongoDB exception: ".$e,false);
             }
             catch (MongoDB\Driver\Exception\InvalidArgumentException $e){
                 error_log("Problem in delete categories \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Invalid Argument mongoDB exception".$e,false);
             }
             catch (MongoDB\Driver\Exception\BulkWriteException $e){
                 error_log("Problem in delete categories \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Bulk Write mongoDB exception: ".$e,false);
             }
             catch (MongoDB\Driver\Exception\RuntimeException $e){
                 error_log("Problem in delete categories \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Runtime mongoDB exception: ".$e,false);
             };
         } else
-            return $this->generalFunctions->returnValue("",false);    
+            return $this->generalFunctions->returnValue("Problem in Categories: wrong info received",false);    
     }
 
     
@@ -165,24 +165,24 @@ class Categories {
                     [ '$set' => [ 'categories.$.name' => $name ]]
                 );
                 if ($result->getModifiedCount()==1)
-                    return $this->generalFunctions->returnValue("",true);
+                    return $this->generalFunctions->returnValue("Category updated",true);
                 else 
-                    return $this->generalFunctions->returnValue("",false);
+                    return $this->generalFunctions->returnValue("Problem in updating categories",false);
             }
             catch (MongoDB\Driver\Exception\InvalidArgumentException $e){
                 error_log("Problem in update categories \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Invalid Argument mongoDB exception".$e,false);
             }
             catch (MongoDB\Driver\Exception\BulkWriteException $e){
                 error_log("Problem in update categories \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Bulk Write mongoDB exception: ".$e,false);
             }
             catch (MongoDB\Driver\Exception\RuntimeException $e){
                 error_log("Problem in update categories \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Runtime mongoDB exception: ".$e,false);
             };
         } else
-            return $this->generalFunctions->returnValue("",false);
+            return $this->generalFunctions->returnValue("Problem in Categories: wrong info received",false);
     }
 }
 ?>

@@ -44,20 +44,20 @@ class Department {
             if (count($result)>0):
                 return $this->generalFunctions->returnValue($result,true);
             else:
-                return $this->generalFunctions->returnValue("", false);
+                return $this->generalFunctions->returnValue("Problem in Department: query is empty",false);
             endif;
         }
         catch (MongoDB\Exception\UnsupportedException $e){
             error_log("Problem in find departments \n".$e);
-            return $this->generalFunctions->returnValue("", false);
+            return $this->generalFunctions->returnValue("Unsupported mongoDB exception: ".$e, false);
         }
         catch (MongoDB\Driver\Exception\InvalidArgumentException $e){
             error_log("Problem in find departments \n".$e);
-            return $this->generalFunctions->returnValue("", false);
+            return $this->generalFunctions->returnValue("Invalid Argument mongoDB exception: ".$e, false);
         }
         catch (MongoDB\Driver\Exception\RuntimeException $e){
             error_log("Problem in find departments \n".$e);
-            return $this->generalFunctions->returnValue("", false);
+            return $this->generalFunctions->returnValue("Runtime mongoDB exception: ".$e, false);
         };
     }
 
@@ -96,23 +96,23 @@ class Department {
                 if ($result):
                     return $this->generalFunctions->returnValue($result, true);
                 else:
-                    return $this->generalFunctions->returnValue("", false);
+                    return $this->generalFunctions->returnValue("Problem in Department: query is empty",false);
                 endif;
             }
             catch (MongoDB\Exception\UnsupportedException $e){
                 error_log("Problem in find departments \n".$e);
-                return $this->generalFunctions->returnValue("", false);
+                return $this->generalFunctions->returnValue("Unsupported mongoDB exception: ".$e, false);
             }
             catch (MongoDB\Driver\Exception\InvalidArgumentException $e){
                 error_log("Problem in find departments \n".$e);
-                return $this->generalFunctions->returnValue("", false);
+                return $this->generalFunctions->returnValue("Invalid Argument mongoDB exception: ".$e, false);
             }
             catch (MongoDB\Driver\Exception\RuntimeException $e){
                 error_log("Problem in find departments \n".$e);
-                return $this->generalFunctions->returnValue("", false);
+                return $this->generalFunctions->returnValue("Runtime mongoDB exception: ".$e, false);
             };
         } else 
-            return $this->generalFunctions->returnValue("", false); 
+            return $this->generalFunctions->returnValue("Problem in Department: no id received",false); 
     }
 
     /**
@@ -157,24 +157,24 @@ class Department {
                     'categories' => [] 
                 ] );
                 if ($result->getInsertedCount()==1)
-                    return $this->generalFunctions->returnValue("",'true');
+                    return $this->generalFunctions->returnValue("Department created",true);
                 else 
-                    return $this->generalFunctions->returnValue("",false);
+                    return $this->generalFunctions->returnValue("Problem in creating department",false);
             }
             catch (MongoDB\Driver\Exception\InvalidArgumentException $e){
                 error_log("Problem in insert department \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Invalid Argument mongoDB exception: ".$e,false);
             }
             catch (MongoDB\Driver\Exception\BulkWriteException $e){
                 error_log("Problem in insert department \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Bulk Write mongoDB exception: ".$e,false);
             }
             catch (MongoDB\Driver\Exception\RuntimeException $e){
                 error_log("Problem in insert department \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Runtime mongoDB exception: ".$e,false);
             };
         } else 
-            return $this->generalFunctions->returnValue("",false); 
+            return $this->generalFunctions->returnValue("Problem in Department: wrong info received",false); 
     }
 
      /**
@@ -213,28 +213,28 @@ class Department {
                     '_id'=>new MongoDB\BSON\ObjectId($id)
                 ]);
                 if ($result->getDeletedCount()==1)
-                    return $this->generalFunctions->returnValue("",'true');
+                    return $this->generalFunctions->returnValue("Department deleted",true);
                 else 
-                    return $this->generalFunctions->returnValue("",false);
+                    return $this->generalFunctions->returnValue("Problem in deleting department",false);
             }
             catch (MongoDB\Exception\UnsupportedException $e){
                 error_log("Problem in delete department \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Unsupported mongoDB exception: ".$e,false);
             }
             catch (MongoDB\Driver\Exception\InvalidArgumentException $e){
                 error_log("Problem in delete department \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Invalid Argument mongoDB exception: ".$e,false);
             }
             catch (MongoDB\Driver\Exception\BulkWriteException $e){
                 error_log("Problem in delete department \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Bulk Write mongoDB exception: ".$e,false);
             }
             catch (MongoDB\Driver\Exception\RuntimeException $e){
                 error_log("Problem in delete department \n".$e);
-                return $this->generalFunctions->returnValue("",false);
-            };
+                return $this->generalFunctions->returnValue("Runtime mongoDB exception: ".$e,false);
+            }
         } else 
-            return $this->generalFunctions->returnValue("",false);
+            return $this->generalFunctions->returnValue("Problem in Department: no id received",false);
     }
 
      /**
@@ -282,24 +282,24 @@ class Department {
                     ]
                 );
                 if ($result->getModifiedCount()==1)
-                    return $this->generalFunctions->returnValue("",'true');
+                    return $this->generalFunctions->returnValue("Department updated",true);
                 else 
-                    return $this->generalFunctions->returnValue("",false);
+                    return $this->generalFunctions->returnValue("Problem in creating department",false);
             }
             catch (MongoDB\Driver\Exception\InvalidArgumentException $e){
                 error_log("Problem in update department \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Invalid Argument mongoDB exception: ".$e,false);
             }
             catch (MongoDB\Driver\Exception\BulkWriteException $e){
                 error_log("Problem in update department \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Bulk Write mongoDB exception: ".$e,false);
             }
             catch (MongoDB\Driver\Exception\RuntimeException $e){
                 error_log("Problem in update department \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Runtime mongoDB exception: ".$e,false);
             };
         } else 
-            return $this->generalFunctions->returnValue("",false);
+            return $this->generalFunctions->returnValue("Problem in Department: wrong info received",false);
     }
 
     private function returnValue($result, $value){

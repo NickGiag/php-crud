@@ -51,23 +51,23 @@ class Subscription {
                 if ($result):
                     return $this->generalFunctions->returnValue($result, true);
                 else:
-                    return $this->generalFunctions->returnValue("", false);
+                    return $this->generalFunctions->returnValue("Problem in Subscription: query is empty", false);
                 endif;
             }
             catch (MongoDB\Exception\UnsupportedException $e){
                 error_log("Problem in findOne subscription \n".$e);
-                return $this->generalFunctions->returnValue("Problem in model subscription: ".$e,false);
+                return $this->generalFunctions->returnValue("Unsupported mongoDB exception: ".$e,false);
             }
             catch (MongoDB\Driver\Exception\InvalidArgumentException $e){
                 error_log("Problem in findOne subscription \n".$e);
-                return $this->generalFunctions->returnValue("Problem in model subscription: ".$e,false);
+                return $this->generalFunctions->returnValue("Invalid Argument mongoDB exception: ".$e,false);
             }
             catch (MongoDB\Driver\Exception\RuntimeException $e){
                 error_log("Problem in findOne subscription \n".$e);
-                return $this->generalFunctions->returnValue("Problem in model subscription: ".$e,false);
+                return $this->generalFunctions->returnValue("Runtime mongoDB exception: ".$e,false);
             };
         } else 
-            return $this->generalFunctions->returnValue("Problem in model subscription: ".$e,false);
+            return $this->generalFunctions->returnValue("Problem in Subscription: wrong info received",false);
     }
 
     
@@ -85,24 +85,24 @@ class Subscription {
                     ]
                 );
                 if ($result->getModifiedCount()==1)
-                    return $this->generalFunctions->returnValue("",true);
+                    return $this->generalFunctions->returnValue("Subscription created",true);
                 else 
-                    return $this->generalFunctions->returnValue("",false);
+                    return $this->generalFunctions->returnValue("Problem in creating subscription",false);
             }
             catch (MongoDB\Driver\Exception\InvalidArgumentException $e){
                 error_log("Problem in insert subscription \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Invalid Argument mongoDB exception: ".$e,false);
             }
             catch (MongoDB\Driver\Exception\BulkWriteException $e){
                 error_log("Problem in insert subscription \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Bulk Write mongoDB exception: ".$e,false);
             }
             catch (MongoDB\Driver\Exception\RuntimeException $e){
                 error_log("Problem in insert subscription \n".$e);
-                return $this->generalFunctions->returnValue("",false);
+                return $this->generalFunctions->returnValue("Runtime mongoDB exception: ".$e,false);
             };
         } else 
-            return $this->generalFunctions->returnValue("",false);
+            return $this->generalFunctions->returnValue("Problem in Subscription: wrong info received",false);
     }
 }
 ?>
