@@ -1,0 +1,8 @@
+{
+    "require": {
+        "mongodb/mongodb": "^1.12",
+        "zircote/swagger-php": "^4.4",
+        "vlucas/phpdotenv": "^5.4",
+        "steampixel/simple-php-router": "^0.7.0"
+    }
+}

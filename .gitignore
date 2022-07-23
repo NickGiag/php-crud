@@ -1,0 +1,6 @@
+/.env
+
+/vendor
+
+/phpinfo.php
+/app_steps
