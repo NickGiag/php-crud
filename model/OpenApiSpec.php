@@ -1,15 +1,13 @@
 <?php
 
+// namespace Model;
+
 use OpenApi\Annotations as OA;
 
 /**
 * @OA\Tag(
 *     name="Department",
 *     description="Operations about Department collection",
-* )
-* @OA\Tag(
-*     name="Subdepartment",
-*     description="Operations about Subdepartment collection",
 * )
 * @OA\Tag(
 *     name="Subdepartment",
@@ -45,8 +43,23 @@ use OpenApi\Annotations as OA;
 *     description="Anouncements API",
 * )
 * @OA\Server(
-*     url="https://crud-php-codingfactory.herokuapp.com",
+*     url="http://coding-factory-php.herokuapp.com/",
 *     description="API server"
+* )
+* @OA\Server(
+*     url="http://localhost/",
+*     description="API server"
+* )
+* @OA\Components(
+*     @OA\SecurityScheme(
+*         securityScheme="bearerAuth",
+*         type="http",
+*         in="header",
+*         scheme="bearer",
+*         bearerFormat="JWT",
+*         name="Authorization",
+*     ),
+*     @OA\Attachable
 * )
 */
 class OpenApiSpec
