@@ -147,8 +147,34 @@ class Department {
     public function createDepartment($data) {
         $identifier = $data->identifier;
         $name = $data->name;
+        
+        // Checking for identical identifiers ---------------------------------------------------------
+        $checked = false;
 
-        if( isset( $identifier ) && isset($name)) {
+        $result = $this->collection->findOne([
+            'identifier'=>intval($identifier)
+        ]);
+        if ($result):
+            return $this->generalFunctions->returnValue("This identifier already exists",false);
+        else:
+            $checked = true;
+        endif;
+        // -------------------------------------------------------------------------------------------
+
+        // Checking for identical names ---------------------------------------------------------
+
+        $result = $this->collection->findOne([
+            'name'=>$name
+        ]);
+        if ($result):
+            return $this->generalFunctions->returnValue("This name already exists",false);
+        else:
+            $checked = true;
+        endif;
+        // -------------------------------------------------------------------------------------------
+
+
+        if( isset( $identifier ) && isset($name) && $checked ) {
             try {
                 $result = $this->collection->insertOne( [
                     'identifier' => intval($identifier), 

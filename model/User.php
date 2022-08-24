@@ -218,7 +218,14 @@ class User {
             try {
 
                 if (password_verify($password,$findUser->password)) {
-                    return $this->returnValue("Logged in",true);
+                    $data = json_encode(array(
+                        "success" => true,
+                        "username" => $username,
+                        "permission" => 'editor',
+                        "authorizations" => 'xxxx'
+                    ));
+                    return $data;
+                    // return $this->returnValue("Logged in",true);
                 }   
                 else 
                     return $this->returnValue("Problem in logging user",false);
