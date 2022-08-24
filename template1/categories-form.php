@@ -34,45 +34,50 @@
     header('Content-type: text/html; charset=UTF-8');
 
     // // define variables and set to empty values
-    $nameErr = $identifierErr = $subdepartmentIDErr = "";
-    $name = $identifier = $subdepartmentID = "";
+    $frmDepartmentErr = $frmSubdepartmentErr = $frmCategoriesErr = "";
+    $frmDepartment = $frmSubdepartment = $frmCategories = "";
 
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
-        if (empty($_POST['name'])) {
-            $nameErr = "Name is required";
+        $category_name = $_POST["frmCategories"];
+        $department_key = explode("-",$_POST['frmDepartment']);
+        $department_identifier = $department_key[1];
+        $subdepartment_id = $_POST["frmSubdepartment"];
+
+        if (empty($category_name)) {
+            $frmCategoriesErr = "Category name is required";
         } else {
-            $name = test_input($_POST["name"]);
+            $category_name = test_input($category_name);
             // check if name only contains letters and whitespaces or Greek letters
-            if (!preg_match("/^[a-zA-Z\p{Greek}\s]+$/u",$_POST['name'])) {
-                $nameErr = "Invalid format for field name";
+            if (!preg_match("/^[a-zA-Z\p{Greek}\s]+$/u",$category_name)) {
+                $frmCategoriesErr = "Invalid format for field name";
             }
         }
-        if (empty($_POST['identifier'])) {
-            $identifierErr = "Department identifier is required";
+        if (empty($department_identifier)) {
+            $frmDepartmentErr = "Department identifier is required";
         } else {
-            $identifier = test_input($_POST["identifier"]);
+            $department_identifier = test_input($department_identifier);
             // check if identifier is number
-            if (!is_numeric($identifier)) {
-                $identifierErr = "Identifier is not a number";
+            if (!is_numeric($department_identifier)) {
+                $frmDepartmentErr = "Identifier is not a number";
             }
         }
 
-        if (empty($_POST["subdepartmentID"])) {
-            $subdepartmentIDErr = "Subdepartment is required";
+        if (empty($subdepartment_id)) {
+            $frmSubdepartmentErr = "Subdepartment id is required";
         } else {
-            $subdepartmentID = test_input($_POST['subdepartmentID']);
+            $subdepartment_id = test_input($subdepartment_id);
             // check if subdepartmentID is string
-            if (!is_string($subdepartmentID)) {
-                $subdepartmentIDErr = "Invalid Subdepartment ID format";
+            if (!is_string($subdepartment_id)) {
+                $frmSubdepartmentErr = "Invalid Subdepartment ID format";
             }
         }
         
-        if (empty($nameErr) && empty($identifierErr) && empty($subdepartmentIDErr)) {
+        if (empty($frmCategoriesErr) && empty($frmDepartmentErr) && empty($frmSubdepartmentErr)) {
             $data = array(
-                'identifier' => intval($identifier),
-                'subdepartment_id' => $subdepartmentID,
-                'name' => $name
+                'identifier' => $department_identifier,
+                'subdepartment_id' => $subdepartment_id,
+                'name' => $category_name
             );
             $result = saveCategories($data);
         }                           
@@ -89,6 +94,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Category</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <style>
         .error {color: #FF0000;}
     </style>
@@ -98,30 +104,23 @@
     <!-- <?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?> -->
     <p><span class="error">* required field</span></p>
     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-        <select name="identifier" id="identifier">
+        <select name="frmDepartment" id="frmDepartment" onchange="findSubdepartment(this)">
             <option value="" default>Επιλέξτε Διεύθυνση</option>
             <?php
                 foreach($allDepartments as $value) {
-                    echo '<option value="'.$value['identifier'].'">'.$value['name']."</option>";
+                    echo '<option value="'.$value['_id']['$oid']."-".$value['identifier'].'">'.$value['name']."</option>";
                 }
             ?>
         </select>
-        <span class="error">*<?php echo $identifierErr;?></span>
+        <span class="error">*<?php echo $frmDepartmentErr;?></span>
         <br><br>
-        <select name="subdepartmentID" id="subdepartmentID">
+        <select name="frmSubdepartment" id="frmSubdepartment">
             <option value="" default>Επιλέξτε Τμήμα</option>
-            <?php
-                foreach($allDepartments as $value) {
-                    foreach($value['subdepartment'] as $value) {
-                        echo '<option value="'.$value['_id']['$oid'].'">'.$value['name']."</option>";
-                    }
-                }
-            ?>
         </select>
-        <span class="error">*<?php echo $subdepartmentIDErr;?></span>
+        <span class="error">*<?php echo $frmSubdepartmentErr;?></span>
         <br><br>
-        Name: <input type="text" name="name" value="<?php echo $name;?>">
-        <span class="error">* <?php echo $nameErr;?></span>
+        Name: <input type="text" name="frmCategories" value="<?php echo $frmCategories;?>">
+        <span class="error">* <?php echo $frmCategoriesErr;?></span>
         <br><br>
         <input type="submit" name="submit" value="submit">
     </form>
@@ -155,5 +154,34 @@
         ?>
 
     </table>
+    <script>
+        function findSubdepartment(dvalue) {
+            var value = dvalue.value;
+            value = value.split("-");
+            url = `/subdepartment/${value[0]}/list`
+            // console.log(value, url);
+
+            $.getJSON(url, function(data) {
+                data = JSON.parse(data['data']);
+                subdepartment = data['subdepartment']
+                // console.log(subdepartment);
+
+                $('#frmSubdepartment').empty();
+                $('#frmSubdepartment').append($('<option>',{
+                        value : "",
+                        text:"Επιλέξτε Τμήμα"
+                    }))
+
+                $.each(subdepartment, function(index, value) {
+                    name = value['name'];
+                    id = value['_id']['$oid'];
+                    $('#frmSubdepartment').append($('<option>',{
+                        value :id,
+                        text:name
+                    }))
+                }) 
+            })
+        }
+    </script>
 </body>
 </html>
