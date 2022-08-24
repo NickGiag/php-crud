@@ -3,8 +3,8 @@
 require __DIR__.'/vendor/autoload.php'; // include Composer's autoloader
 
 // Uncomment for localhost running
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-$dotenv->load();
+// $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+// $dotenv->load();
 
 include 'connect.php';
 
