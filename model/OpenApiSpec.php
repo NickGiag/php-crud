@@ -45,7 +45,7 @@ use OpenApi\Annotations as OA;
 *     description="Anouncements API",
 * )
 * @OA\Server(
-*     url="http://localhost/",
+*     url="https://crud-php-codingfactory.herokuapp.com",
 *     description="API server"
 * )
 */
